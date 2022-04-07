@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 07 avr. 2022 à 12:03
+-- Généré le : jeu. 07 avr. 2022 à 19:59
 -- Version du serveur : 10.4.21-MariaDB
 -- Version de PHP : 8.0.12
 
@@ -28,9 +28,18 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `catégorie` (
-  `id_catégorie` int(11) NOT NULL,
+  `id_categorie` int(11) NOT NULL,
   `icone` mediumtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `catégorie`
+--
+
+INSERT INTO `catégorie` (`id_categorie`, `icone`) VALUES
+(0, ''),
+(1, 'icone1'),
+(2, 'icone2');
 
 -- --------------------------------------------------------
 
@@ -44,6 +53,15 @@ CREATE TABLE `question` (
   `id_quizz` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Déchargement des données de la table `question`
+--
+
+INSERT INTO `question` (`id_question`, `énoncé`, `id_quizz`) VALUES
+(0, 'Le lion rugit-il?', 0),
+(1, 'Un développeur web a-t-il besoin d\'un ordinateur?', 1),
+(2, 'le brocoli est-il bleu?', 2);
+
 -- --------------------------------------------------------
 
 --
@@ -53,9 +71,17 @@ CREATE TABLE `question` (
 CREATE TABLE `quizz` (
   `id_quizz` int(11) NOT NULL,
   `titre` varchar(255) NOT NULL,
-  `image` blob NOT NULL,
   `id_categorie` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `quizz`
+--
+
+INSERT INTO `quizz` (`id_quizz`, `titre`, `id_categorie`) VALUES
+(0, 'légumes', 2),
+(1, 'animaux', 0),
+(2, 'informatique', 1);
 
 -- --------------------------------------------------------
 
@@ -65,9 +91,18 @@ CREATE TABLE `quizz` (
 
 CREATE TABLE `reponse` (
   `id_reponse` int(11) NOT NULL,
-  `correcte/fausse` varchar(255) NOT NULL,
+  `correcteFausse` text NOT NULL,
   `id_question` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `reponse`
+--
+
+INSERT INTO `reponse` (`id_reponse`, `correcteFausse`, `id_question`) VALUES
+(0, 'oui', 0),
+(1, 'oui', 1),
+(2, 'non', 2);
 
 --
 -- Index pour les tables déchargées
@@ -77,7 +112,7 @@ CREATE TABLE `reponse` (
 -- Index pour la table `catégorie`
 --
 ALTER TABLE `catégorie`
-  ADD PRIMARY KEY (`id_catégorie`);
+  ADD PRIMARY KEY (`id_categorie`);
 
 --
 -- Index pour la table `question`
@@ -114,7 +149,7 @@ ALTER TABLE `question`
 -- Contraintes pour la table `quizz`
 --
 ALTER TABLE `quizz`
-  ADD CONSTRAINT `quizz_ibfk_1` FOREIGN KEY (`id_categorie`) REFERENCES `catégorie` (`id_catégorie`);
+  ADD CONSTRAINT `quizz_ibfk_1` FOREIGN KEY (`id_categorie`) REFERENCES `catégorie` (`id_categorie`);
 
 --
 -- Contraintes pour la table `reponse`
